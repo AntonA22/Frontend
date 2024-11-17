@@ -43,6 +43,7 @@ const ShipPage: React.FC<ShipPageProps> = ({ selectedShip, setSelectedShip, isMo
         }
 
         return () => setSelectedShip(null)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (!selectedShip) {

@@ -54,6 +54,7 @@ const ShipsListPage: React.FC<ShipsListPageProps> = ({ ships, setShips, isMock, 
 
     useEffect(() => {
         get_Data()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
