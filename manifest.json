@@ -1,0 +1,20 @@
+{
+    "name": "Учет перелетов Starship",
+    "short_name": "Учет перелетов Starship",
+    "start_url": "/Frontend/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "icons": [
+      {
+        "src": "/Frontend/pwa-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/Frontend/pwa-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
