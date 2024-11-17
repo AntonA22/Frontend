@@ -2,27 +2,30 @@ import {Button, Col, Container, Form, Input, Row} from "reactstrap";
 import {T_Ship} from "src/modules/types.ts";
 import ShipCard from "src/components/ShipCard/index.tsx";
 import {ShipMocks} from "src/modules/mocks.ts";
-import {FormEvent, useEffect} from "react";
+import {ChangeEvent, FormEvent, useEffect} from "react";
 import * as React from "react";
+import {useDispatch} from "react-redux";
+import {useAppSelector} from "src/store/store.ts";
+import {updateShipName} from "src/store/slices/shipsSlice.ts";
 
 interface ShipsListPageProps {
     ships: T_Ship[];
     setShips: (ships: T_Ship[]) => void;
     isMock: boolean;
     setIsMock: (mock: boolean) => void;
-    shipName: string;
-    setShipName: (name: string) => void;
   }
 
-const ShipsListPage: React.FC<ShipsListPageProps> = ({ ships, setShips, isMock, setIsMock, shipName, setShipName }) => {
-    const get_Data = async () => {
-        const url = `/api/ships/?ship_name=${shipName.toLowerCase()}`;
-        const options = {
-            signal: AbortSignal.timeout(1000)
-        };
+const ShipsListPage: React.FC<ShipsListPageProps> = ({ ships, setShips, isMock, setIsMock }) => {
 
+    const dispatch = useDispatch()
+
+    const {ship_name} = useAppSelector((state) => state.ships)
+
+    const get_Data = async () => {
+
+        const url = `/api/ships/?ship_name=${ship_name.toLowerCase()}`;
         try {
-            const response = await fetch(url, options);
+            const response = await fetch(url);
             const { ships } = await response.json();
             setShips(ships);
             setIsMock(false);
@@ -33,16 +36,20 @@ const ShipsListPage: React.FC<ShipsListPageProps> = ({ ships, setShips, isMock, 
 
     const get_Mocks = () => {
         setIsMock(true)
-        setShips(ShipMocks.filter(ship => ship.name.toLowerCase().includes(shipName.toLowerCase())))
+        setShips(ShipMocks.filter(ship => ship.name.toLowerCase().includes(ship_name.toLowerCase())))
     }
 
-    const search_function = async (e:FormEvent) => {
+    const handleSubmit = async (e:FormEvent) => {
         e.preventDefault()
         if (isMock) {
             get_Mocks()
         } else {
             await get_Data()
         }
+    }
+
+    const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
+        dispatch(updateShipName(e.target.value))
     }
 
     useEffect(() => {
@@ -53,10 +60,10 @@ const ShipsListPage: React.FC<ShipsListPageProps> = ({ ships, setShips, isMock, 
         <Container>
             <Row className="mb-5" style={{ paddingLeft: "65px" }}>
                 <Col md="6">
-                    <Form onSubmit={search_function}>
+                    <Form onSubmit={handleSubmit}>
                         <Row>
                             <Col md="8">
-                                <Input value={shipName} onChange={(e) => setShipName(e.target.value)} placeholder="Введите название:"></Input>
+                                <Input value={ship_name} onChange={handleChange} placeholder="Введите название:"></Input>
                             </Col>
                             <Col>
                                 <Button color="primary" className="w-100 search-btn">Поиск</Button>

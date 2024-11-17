@@ -15,6 +15,7 @@ export default defineConfig({
       },
     }, 
   },
+  base: "/frontend",
   plugins: [react()],
   resolve: {
     alias: {

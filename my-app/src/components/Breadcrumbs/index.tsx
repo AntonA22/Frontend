@@ -1,7 +1,6 @@
 import {Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Link, useLocation} from "react-router-dom";
 import {T_Ship} from "modules/types.ts";
-import {isHomePage, isShipPage} from "src/utils/utils.ts";
 
 interface BreadcrumbsProps {
     selectedShip: T_Ship | null
@@ -13,13 +12,12 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ selectedShip }) => {
 
     return (
         <Breadcrumb className="fs-5" style={{ paddingLeft: "75px" }}>
-			{isHomePage(location.pathname) &&
+			{location.pathname == "/" &&
 				<BreadcrumbItem>
 					<Link to="/">
 						Главная
 					</Link>
 				</BreadcrumbItem>
-                
 			}
 			{location.pathname.includes("/ships") &&
                 <BreadcrumbItem active>
@@ -28,10 +26,10 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ selectedShip }) => {
                     </Link>
                 </BreadcrumbItem>
 			}
-            {isShipPage(location.pathname) &&
+            {selectedShip &&
                 <BreadcrumbItem active>
                     <Link to={location.pathname}>
-                        { selectedShip?.name }
+                        { selectedShip.name }
                     </Link>
                 </BreadcrumbItem>
             }

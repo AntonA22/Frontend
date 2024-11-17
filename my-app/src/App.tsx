@@ -17,8 +17,6 @@ function App() {
 
     const [isMock, setIsMock] = useState(false);
 
-    const [shipName, setShipName] = useState<string>("")
-
     return (
         <div>
             <Header/>
@@ -29,7 +27,7 @@ function App() {
                 <Row>
                     <Routes>
 						            <Route path="/" element={<HomePage />} />
-                        <Route path="/ships/" element={<ShipsListPage ships={ships} setShips={setShips} isMock={isMock} setIsMock={setIsMock} shipName={shipName} setShipName={setShipName}/>} />
+                        <Route path="/ships/" element={<ShipsListPage ships={ships} setShips={setShips} isMock={isMock} setIsMock={setIsMock}/>} />
                         <Route path="/ships/:id" element={<ShipPage selectedShip={selectedShip} setSelectedShip={setSelectedShip} isMock={isMock} setIsMock={setIsMock}/>} />
                     </Routes>
                 </Row>

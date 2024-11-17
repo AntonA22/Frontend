@@ -1,34 +1,33 @@
-import {Col, Container, Nav, Navbar, NavbarBrand, NavItem, NavLink, Row} from "reactstrap";
-import {NavLink as RRNavLink} from "react-router-dom";
+import {Collapse, Container, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
+import { NavLink as RRNavLink} from "react-router-dom";
+import {useState} from "react";
 
 const Header = () => {
+	const [collapsed, setCollapsed] = useState(true);
+
+	const toggleNavbar = () => setCollapsed(!collapsed);
+
+	const hideMenu = () => setCollapsed(true)
+
     return (
 		<header>
-			<Navbar className="p-3" expand="lg">
-				<Container>
-					<Row>
-						<Col md="6" className="d-flex align-items-center">
-							<NavbarBrand>
-								<NavLink tag={RRNavLink} to="/">
-									Учет перелетов Starship между земными космодромами
-								</NavLink>
-							</NavbarBrand>
-						</Col>
-						<Col md="6" className="d-flex justify-content-end align-items-center">
-							<Nav className="fs-5 gap-3" navbar>
+			<Navbar collapseOnSelect className="p-0" expand="lg">
+				<Container className="p-0">
+					<Navbar collapseOnSelect expand="lg" dark>
+						<NavbarBrand tag={RRNavLink} to="/">
+							Учет перелетов Starship между земными космодромами
+						</NavbarBrand>
+						<NavbarToggler aria-controls="responsive-navbar-nav" onClick={toggleNavbar} />
+						<Collapse id="responsive-navbar-nav" navbar isOpen={!collapsed}>
+							<Nav className="mr-auto fs-5 d-flex flex-grow-1 justify-content-end align-items-center" navbar>
 								<NavItem>
-									<NavLink tag={RRNavLink} to="/">
-										Главная
-									</NavLink>
-								</NavItem>
-								<NavItem>
-									<NavLink tag={RRNavLink} to="/ships">
+									<NavLink tag={RRNavLink} onClick={hideMenu} to="/ships">
 										Космолеты
 									</NavLink>
 								</NavItem>
 							</Nav>
-						</Col>
-					</Row>
+						</Collapse>
+					</Navbar>
 				</Container>
 			</Navbar>
 		</header>
