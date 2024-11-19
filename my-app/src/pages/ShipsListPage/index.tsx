@@ -63,7 +63,7 @@ const ShipsListPage: React.FC<ShipsListPageProps> = ({ ships, setShips, isMock, 
                 <Col md="6">
                     <Form onSubmit={handleSubmit}>
                         <Row>
-                            <Col md="8">
+                            <Col xs="8">
                                 <Input value={ship_name} onChange={handleChange} placeholder="Введите название:"></Input>
                             </Col>
                             <Col>
@@ -75,7 +75,7 @@ const ShipsListPage: React.FC<ShipsListPageProps> = ({ ships, setShips, isMock, 
             </Row>
             <Row>
                 {ships?.map(ship => (
-                    <Col key={ship.id} xs="4">
+                    <Col key={ship.id} sm="12" md="6" lg="4">
                         <ShipCard ship={ship} isMock={isMock} />
                     </Col>
                 ))}

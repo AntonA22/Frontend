@@ -3,9 +3,8 @@ import { NavLink as RRNavLink} from "react-router-dom";
 import {useState} from "react";
 
 const Header = () => {
-	const [collapsed, setCollapsed] = useState(true);
+	const [collapsed, setCollapsed] = useState(true); // открыто или свернуто
 
-	const toggleNavbar = () => setCollapsed(!collapsed);
 
 	const hideMenu = () => setCollapsed(true)
 
@@ -14,10 +13,10 @@ const Header = () => {
 			<Navbar collapseOnSelect className="p-0" expand="lg">
 				<Container className="p-0">
 					<Navbar collapseOnSelect expand="lg" dark>
-						<NavbarBrand tag={RRNavLink} to="/">
+						<NavbarBrand tag={RRNavLink} to="/" className="text-wrap">
 							Учет перелетов Starship между земными космодромами
 						</NavbarBrand>
-						<NavbarToggler aria-controls="responsive-navbar-nav" onClick={toggleNavbar} />
+						<NavbarToggler aria-controls="responsive-navbar-nav" onClick={() => setCollapsed(!collapsed)} />
 						<Collapse id="responsive-navbar-nav" navbar isOpen={!collapsed}>
 							<Nav className="mr-auto fs-5 d-flex flex-grow-1 justify-content-end align-items-center" navbar>
 								<NavItem>
