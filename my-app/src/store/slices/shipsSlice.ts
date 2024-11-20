@@ -1,10 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
-type T_ShipsSlice = {
-    ship_name: string
+interface ShipsSlice {
+    ship_name: string;
 }
 
-const initialState:T_ShipsSlice = {
+const initialState:ShipsSlice = {
     ship_name: "",
 }
 
@@ -15,10 +17,17 @@ const shipsSlice = createSlice({
     reducers: {
         updateShipName: (state, action) => {
             state.ship_name = action.payload
+        },
+        clearShipName(state: ShipsSlice) {
+            state.ship_name = '';
         }
     }
 })
+export const useTitle = () => useSelector((state: RootState) => state.ships.ship_name);
 
-export const { updateShipName} = shipsSlice.actions;
+export const { 
+    updateShipName,
+    clearShipName,
+} = shipsSlice.actions;
 
 export default shipsSlice.reducer

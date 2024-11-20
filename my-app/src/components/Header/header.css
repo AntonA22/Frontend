@@ -1,0 +1,23 @@
+
+.navbar-brand {
+    word-wrap: break-word; /* Позволяет переносить длинные слова */
+    white-space: normal;   /* Ожидаемый перенос строки при необходимости */
+}
+
+@media (max-width: 1200px) {
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1rem; 
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 0.875rem; 
+    }
+}

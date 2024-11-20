@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {useState} from "react";
 import Header from "./components/Header";
 import Breadcrumbs from "./components/Breadcrumbs";
@@ -7,9 +8,25 @@ import {Route, Routes} from "react-router-dom";
 import {T_Ship} from "src/modules/types.ts";
 import {Container, Row} from "reactstrap";
 import HomePage from "./pages/HomePage";
+import { useEffect } from "react";
 import "./styles.css"
 
 function App() {
+    useEffect(() => {
+      if (typeof window !== 'undefined' && (window as any).__TAURI__?.tauri) {
+        const { invoke } = (window as any).__TAURI__.tauri;
+        
+        invoke('tauri', { cmd: 'create' })
+          .then((response: any) => console.log(response))
+          .catch((error: any) => console.log(error));
+
+        return () => {
+          invoke('tauri', { cmd: 'close' })
+            .then((response: any) => console.log(response))
+            .catch((error: any) => console.log(error));
+        };
+      }
+    }, []);
 
     const [ships, setShips] = useState<T_Ship[]>([])
 

@@ -1,32 +1,35 @@
-import {Collapse, Container, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
-import { NavLink as RRNavLink} from "react-router-dom";
+import {Container, Navbar} from "reactstrap";
+import { NavLink} from "react-router-dom";
 import {useState} from "react";
+import './header.css';
 
 const Header = () => {
-	const [collapsed, setCollapsed] = useState(true); // открыто или свернуто
 
-
-	const hideMenu = () => setCollapsed(true)
+	const [collapsed, setCollapsed] = useState(true);
 
     return (
 		<header>
 			<Navbar collapseOnSelect className="p-0" expand="lg">
 				<Container className="p-0">
-					<Navbar collapseOnSelect expand="lg" dark>
-						<NavbarBrand tag={RRNavLink} to="/" className="text-wrap">
+					<div className="navbar navbar-expand-lg navbar-dark">
+						<div className="navbar-brand">
+						<NavLink to="/" className="navbar-brand">
 							Учет перелетов Starship между земными космодромами
-						</NavbarBrand>
-						<NavbarToggler aria-controls="responsive-navbar-nav" onClick={() => setCollapsed(!collapsed)} />
-						<Collapse id="responsive-navbar-nav" navbar isOpen={!collapsed}>
-							<Nav className="mr-auto fs-5 d-flex flex-grow-1 justify-content-end align-items-center" navbar>
-								<NavItem>
-									<NavLink tag={RRNavLink} onClick={hideMenu} to="/ships">
-										Космолеты
-									</NavLink>
-								</NavItem>
-							</Nav>
-						</Collapse>
-					</Navbar>
+						</NavLink>
+						</div>
+						<button className="navbar-toggler" type="button" onClick={() => setCollapsed(!collapsed)} aria-controls="responsive-navbar-nav" aria-expanded={!collapsed} aria-label="Toggle navigation">
+						<span className="navbar-toggler-icon"></span>
+						</button>
+						<div className={`collapse navbar-collapse ${!collapsed ? "show" : ""}`} id="responsive-navbar-nav">
+						<div className="navbar-nav ml-auto fs-5 d-flex flex-grow-1 justify-content-end align-items-center">
+							<div className="nav-item">
+							<NavLink to="/ships" className="nav-link" onClick={() => setCollapsed(true)}>
+								Космолеты
+							</NavLink>
+							</div>
+						</div>
+						</div>
+					</div>
 				</Container>
 			</Navbar>
 		</header>

@@ -1,12 +1,13 @@
-import {Button, Col, Container, Form, Input, Row} from "reactstrap";
+import {Container} from "reactstrap";
 import {T_Ship} from "src/modules/types.ts";
 import ShipCard from "src/components/ShipCard/index.tsx";
 import {ShipMocks} from "src/modules/mocks.ts";
 import {ChangeEvent, FormEvent, useEffect} from "react";
 import * as React from "react";
 import {useDispatch} from "react-redux";
-import {useAppSelector} from "src/store/store.ts";
-import {updateShipName} from "src/store/slices/shipsSlice.ts";
+// import {useAppSelector} from "src/store/store.ts";
+import {updateShipName, useTitle} from "src/store/slices/shipsSlice.ts";
+import './shipslistpage.css';
 
 interface ShipsListPageProps {
     ships: T_Ship[];
@@ -19,7 +20,7 @@ const ShipsListPage: React.FC<ShipsListPageProps> = ({ ships, setShips, isMock, 
 
     const dispatch = useDispatch()
 
-    const {ship_name} = useAppSelector((state) => state.ships)
+    const ship_name = useTitle()
 
     const get_Data = async () => {
 
@@ -59,27 +60,38 @@ const ShipsListPage: React.FC<ShipsListPageProps> = ({ ships, setShips, isMock, 
 
     return (
         <Container>
-            <Row className="mb-5" style={{ paddingLeft: "65px" }}>
-                <Col md="6">
-                    <Form onSubmit={handleSubmit}>
-                        <Row>
-                            <Col xs="8">
-                                <Input value={ship_name} onChange={handleChange} placeholder="Введите название:"></Input>
-                            </Col>
-                            <Col>
-                                <Button color="primary" className="w-100 search-btn">Поиск</Button>
-                            </Col>
-                        </Row>
-                    </Form>
-                </Col>
-            </Row>
-            <Row>
-                {ships?.map(ship => (
-                    <Col key={ship.id} sm="12" md="6" lg="4">
-                        <ShipCard ship={ship} isMock={isMock} />
-                    </Col>
+            <div className="row mb-5" style={{ paddingLeft: "65px" }}>
+                <div className="col-md-6">
+                    <form onSubmit={handleSubmit}>
+                        <div className="row align-items-center">
+                        <div className=" col-6 col-md-8 mb-2 mb-md-0">
+                            <input 
+                                value={ship_name} 
+                                onChange={handleChange} 
+                                placeholder="Введите название:" 
+                                className="form-control search-input"
+                            />
+                        </div>
+                        <div className="col-6 col-md-4 d-flex justify-content-md-start">
+                            <button 
+                                type="submit" 
+                                className="btn btn-primary search-btn"
+                            >
+                                Поиск
+                            </button>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div className="row">
+                {ships?.map((ship) => (
+                    <div key={ship.id} className="col-sm-12 col-md-6 col-lg-4">
+                    <ShipCard ship={ship} isMock={isMock} />
+                    </div>
                 ))}
-            </Row>
+            </div>
         </Container>
     );
 };

@@ -2,7 +2,6 @@ import * as React from 'react';
 import {useParams} from "react-router-dom";
 import {useEffect} from "react";
 import {T_Ship} from "src/modules/types.ts";
-import {Col, Container, Row} from "reactstrap";
 import {ShipMocks} from "src/modules/mocks.ts";
 import mockImage from "src/assets/mock.png";
 
@@ -55,22 +54,22 @@ const ShipPage: React.FC<ShipPageProps> = ({ selectedShip, setSelectedShip, isMo
     }
 
     return (
-        <Container>
-            <Row>
-                <Col md="6">
+        <div className="container">
+            <div className="row">
+                <div className="col-md-6">
                     <img
                         alt=""
                         src={isMock ? mockImage as string : selectedShip.image}
                         className="w-100"
                     />
-                </Col>
-                <Col md="6">
+                </div>
+                <div className="col-md-6">
                     <h1 className="mb-3">{selectedShip.name}</h1>
                     <p className="fs-5">Описание: {selectedShip.description}</p>
                     <p className="fs-5">Дата изготовления: {selectedShip.creation_date}.</p>
-                </Col>
-            </Row>
-        </Container>
+                </div>
+            </div>
+        </div>
     );
 };
 
