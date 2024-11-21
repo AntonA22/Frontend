@@ -6,7 +6,7 @@ interface ShipsSlice {
     ship_name: string;
 }
 
-const initialState:ShipsSlice = {
+const initialState: ShipsSlice = {
     ship_name: "",
 }
 
@@ -15,11 +15,8 @@ const shipsSlice = createSlice({
     name: 'ships',
     initialState: initialState,
     reducers: {
-        updateShipName: (state, action) => {
+        updateShipName: (state: ShipsSlice, action) => {
             state.ship_name = action.payload
-        },
-        clearShipName(state: ShipsSlice) {
-            state.ship_name = '';
         }
     }
 })
@@ -27,7 +24,7 @@ export const useTitle = () => useSelector((state: RootState) => state.ships.ship
 
 export const { 
     updateShipName,
-    clearShipName,
+//    clearShipName,
 } = shipsSlice.actions;
 
 export default shipsSlice.reducer

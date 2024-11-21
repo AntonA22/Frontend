@@ -1,7 +1,7 @@
 
 .navbar-brand {
-    word-wrap: break-word; /* Позволяет переносить длинные слова */
-    white-space: normal;   /* Ожидаемый перенос строки при необходимости */
+    word-wrap: break-word; 
+    white-space: normal;  
 }
 
 @media (max-width: 1200px) {

@@ -27,8 +27,21 @@ const ShipsListPage: React.FC<ShipsListPageProps> = ({ ships, setShips, isMock, 
         const url = `/api/ships/?ship_name=${ship_name.toLowerCase()}`;
         try {
             const response = await fetch(url);
-            const { ships } = await response.json();
-            setShips(ships);
+            const results  = await response.json();
+            console.log(ships);
+            const currentHost = window.location.hostname;
+            if (Array.isArray(ships)) {
+                results.ships = results.ships.map((ship: { image: string }) => {
+                    if (ship.image) {
+                        ship.image = ship.image.replace('localhost', currentHost);
+                    }
+                    return ship;
+                });
+            } else {
+                console.warn('Ships is not an array:', results.ships);
+            }
+
+            setShips(results.ships);
             setIsMock(false);
         } catch {
             get_Mocks();
