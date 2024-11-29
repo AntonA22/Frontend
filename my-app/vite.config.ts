@@ -15,7 +15,7 @@ export default defineConfig({
       },
     }, 
   },
-  base: "/Frontend",
+  base: "/starship_flights_frontend",
   plugins: [react()],
   resolve: {
     alias: {

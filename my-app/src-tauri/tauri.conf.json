@@ -5,7 +5,7 @@
   "identifier": "com.tauri-app.app",
   "build": {
     "beforeDevCommand": "npm run dev",
-    "devUrl": "http://172.20.10.11:3000/Frontend",
+    "devUrl": "http://172.20.10.11:3000/starship_flights_frontend",
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist"
   },

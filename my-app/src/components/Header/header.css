@@ -1,7 +1,7 @@
 
 .navbar-brand {
-    word-wrap: break-word; 
-    white-space: normal;  
+    word-wrap: break-word !important; 
+    white-space: normal !important; 
 }
 
 @media (max-width: 1200px) {

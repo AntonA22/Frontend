@@ -1,6 +1,6 @@
 {
-  "homepage": "https://AntonA22.github.io/Frontend/",
-  "name": "frontend",
+  "homepage": "https://AntonA22.github.io/starship_flights_frontend/",
+  "name": "starship_flights_frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",

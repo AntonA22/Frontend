@@ -14,7 +14,7 @@ const Header = () => {
 			<Navbar collapseOnSelect className="p-0" expand="lg">
 				<Container className="p-0">
 					<div className="navbar navbar-expand-lg navbar-dark">
-						<div className="navbar-brand">
+						<div>
 							<NavLink to="/" className="navbar-brand">
 								Учет перелетов Starship между земными космодромами
 							</NavLink>
