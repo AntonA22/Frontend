@@ -4,6 +4,8 @@ import {useEffect} from "react";
 import {T_Ship} from "src/modules/types.ts";
 import {ShipMocks} from "src/modules/mocks.ts";
 import mockImage from "src/assets/mock.png";
+import { dest_img } from "../../../target_config"
+import { dest_api } from "../../../target_config"
 
 interface ShipPageProps {
     selectedShip: T_Ship | null;
@@ -16,7 +18,9 @@ const ShipPage: React.FC<ShipPageProps> = ({ selectedShip, setSelectedShip, isMo
     const { id } = useParams<{id: string}>();
 
     const get_data = async () => {
-        const url = `/api/ships/${id}`;
+        const url = dest_api !== "api" 
+            ? `${dest_api}/ships/${id}` 
+            : `/${dest_api}/ships/${id}`;
         const options = {
             signal: AbortSignal.timeout(1000)
         };
@@ -59,7 +63,9 @@ const ShipPage: React.FC<ShipPageProps> = ({ selectedShip, setSelectedShip, isMo
                 <div className="col-md-6">
                     <img
                         alt=""
-                        src={isMock ? mockImage as string : selectedShip.image}
+                        src={dest_img === "img-proxy" 
+                            ? (isMock ? mockImage as string : selectedShip.image) 
+                            : selectedShip.image.replace("localhost", "172.20.10.11")}
                         className="w-100"
                     />
                 </div>

@@ -8,6 +8,7 @@ import {useDispatch} from "react-redux";
 // import {useAppSelector} from "src/store/store.ts";
 import {updateShipName, useTitle} from "src/store/slices/shipsSlice.ts";
 import './shipslistpage.css';
+import { dest_api } from "../../../target_config"
 
 interface ShipsListPageProps {
     ships: T_Ship[];
@@ -24,7 +25,9 @@ const ShipsListPage: React.FC<ShipsListPageProps> = ({ ships, setShips, isMock, 
 
     const get_Data = async () => {
 
-        const url = `/api/ships/?ship_name=${ship_name.toLowerCase()}`;
+        const url = dest_api !== "api" 
+            ? `${dest_api}/ships/?ship_name=${ship_name.toLowerCase()}` 
+            : `/${dest_api}/ships/?ship_name=${ship_name.toLowerCase()}`;
         try {
             const response = await fetch(url);
             const results  = await response.json();
