@@ -10,6 +10,9 @@ import {Container, Row} from "reactstrap";
 import HomePage from "./pages/HomePage";
 import { useEffect } from "react";
 import "./styles.css"
+import { RegistrationPage } from "./pages/RegistrationPage";
+import { LoginPage } from "./pages/LoginPage";
+import { FlightPage } from "./pages/FlightPage";
 
 function App() {
     useEffect(() => {
@@ -46,6 +49,9 @@ function App() {
 						            <Route path="/" element={<HomePage />} />
                         <Route path="/ships/" element={<ShipsListPage ships={ships} setShips={setShips} isMock={isMock} setIsMock={setIsMock}/>} />
                         <Route path="/ships/:id" element={<ShipPage selectedShip={selectedShip} setSelectedShip={setSelectedShip} isMock={isMock} setIsMock={setIsMock}/>} />
+                        <Route path={"/register"} element={<RegistrationPage />} />
+                        <Route path={"/login"} element={<LoginPage />} />
+                        <Route path="/flights/:id_flight" element={<FlightPage/>} />
                     </Routes>
                 </Row>
             </Container>

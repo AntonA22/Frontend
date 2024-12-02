@@ -1,0 +1,92 @@
+/* Контейнер страницы */
+.LoginPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    color: #ffffff; /* Белый текст */
+    margin-top: 15px;
+  }
+  
+  /* Заголовок */
+  .LoginPage h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    color: white; /* Небесно-голубой цвет */
+  }
+
+  .LoginPage h2 {
+    font-size: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    color: red; /* Небесно-голубой цвет */
+  }
+  
+  /* Форма */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px; /* Ограничение ширины формы */
+    background: rgba(0, 0, 0, 0.8); /* Полупрозрачный тёмный фон */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Форм-группы */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  /* Метки */
+  form label {
+    font-size: 1.2rem;
+    color: #ffffff;
+    text-align: left;
+  }
+  
+  /* Поля ввода */
+  form input {
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.8); /* Полупрозрачный фон */
+    color: #ffffff;
+    font-size: 1rem;
+  }
+  
+  form input:focus {
+    border-color: #87CEEB; /* Цвет рамки при фокусе */
+    outline: none;
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
+  /* Кнопка */
+  form button {
+    padding: 10px;
+    background: #87CEEB; /* Цвет кнопки */
+    border: none;
+    border-radius: 5px;
+    color: #000; /* Тёмный текст */
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 10px;
+  }
+  
+  form button:hover {
+    background: #00aaff;
+    transform: translateY(-2px); /* Лёгкий подъём при наведении */
+  }
+  
+  form button:active {
+    background: #0077cc;
+    transform: translateY(0);
+  }
+  
