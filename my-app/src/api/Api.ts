@@ -92,6 +92,14 @@ export interface User {
   username: string;
 }
 
+export interface RegisterRequest {
+  username: string;
+  email: string;
+  password: string;
+  first_name: string;
+  last_name: string
+}
+
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
 import axios from "axios";
 
@@ -371,7 +379,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
 
       data: {
         /** Новая полезная нагрузка */
-        value: number;
+        payload: number;
       },
       params: RequestParams = {},
     ) =>
@@ -617,7 +625,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/users/register/
      * @secure
      */
-    usersRegisterCreate: (data: User, params: RequestParams = {}) =>
+    usersRegisterCreate: (data: RegisterRequest, params: RequestParams = {}) =>
       this.request<void, void>({
         path: `/users/register/`,
         method: "POST",
@@ -634,7 +642,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PUT:/users/{user_id}/update/
      * @secure
      */
-    usersUpdateUpdate: (userId: string, data: User, params: RequestParams = {}) =>
+    usersUpdateUpdate: (userId: string, data: RegisterRequest, params: RequestParams = {}) =>
       this.request<User, void>({
         path: `/users/${userId}/update/`,
         method: "PUT",

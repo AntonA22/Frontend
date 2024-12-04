@@ -1,41 +1,122 @@
+
 import {Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Link, useLocation} from "react-router-dom";
-import {T_Ship} from "modules/types.ts";
+import {useAppSelector} from "src/store/store.ts";
 
-interface BreadcrumbsProps {
-    selectedShip: T_Ship | null
-}
-
-const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ selectedShip }) => {
+export const Breadcrumbs = () => {
 
     const location = useLocation()
 
+    const selectedShip = useAppSelector((state) => state.ships.selectedShip)
+
+    const flight = useAppSelector((state) => state.flights.flight)
+
+    const crumbs = () => {
+
+        if (location.pathname == '/') {
+            return (
+                <>
+                    <BreadcrumbItem>
+                        <Link to="/">
+                            Главная
+                        </Link>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem></BreadcrumbItem>
+                </>
+            )
+        }
+
+        if (location.pathname == '/ships/') {
+            return (
+                <>
+                    <BreadcrumbItem>
+                        <Link to="/ships/">
+                            Космолеты
+                        </Link>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem></BreadcrumbItem>
+                </>
+            )
+        }
+
+        if (selectedShip) {
+            return (
+                <>
+                    <BreadcrumbItem>
+                        <Link to="/ships/">
+                            Космолеты
+                        </Link>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem active>
+                        <Link to={location.pathname}>
+                            {selectedShip?.name}
+                        </Link>
+                    </BreadcrumbItem>
+                </>
+            )
+        }
+
+        if (flight) {
+            return (
+                <>
+                    <BreadcrumbItem active>
+                        <Link to="/flights/">
+                            Перелеты
+                        </Link>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem active>
+                        <Link to={location.pathname}>
+                            Перелет №{flight?.id}
+                        </Link>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem></BreadcrumbItem>
+                </>
+            )
+        }
+
+        if (location.pathname == '/flights/') {
+            return (
+                <>
+                    <BreadcrumbItem active>
+                        <Link to={location.pathname}>
+                            Перелеты
+                        </Link>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem></BreadcrumbItem>
+                </>
+            )
+        }
+
+        if (location.pathname == '/login/') {
+            return (
+                <>
+                    <BreadcrumbItem active>
+                        <Link to={location.pathname}>
+                            Вход
+                        </Link>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem></BreadcrumbItem>
+                </>
+            )
+        }
+
+        if (location.pathname == '/register/') {
+            return (
+                <>
+                    <BreadcrumbItem active>
+                        <Link to={location.pathname}>
+                            Регистрация
+                        </Link>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem></BreadcrumbItem>
+                </>
+            )
+        }
+    };
+
     return (
-        <Breadcrumb className="fs-5" style={{ paddingLeft: "75px" }}>
-			{location.pathname == "/" &&
-				<BreadcrumbItem>
-					<Link to="/">
-						Главная
-					</Link>
-				</BreadcrumbItem>
-			}
-			{location.pathname.includes("/ships") &&
-                <BreadcrumbItem active>
-                    <Link to="/ships">
-						Космолеты
-                    </Link>
-                </BreadcrumbItem>
-			}
-            {selectedShip &&
-                <BreadcrumbItem active>
-                    <Link to={location.pathname}>
-                        { selectedShip.name }
-                    </Link>
-                </BreadcrumbItem>
-            }
-			<BreadcrumbItem />
+        <Breadcrumb className="fs-5">
+            {crumbs()}
         </Breadcrumb>
     );
 };
-
-export default Breadcrumbs

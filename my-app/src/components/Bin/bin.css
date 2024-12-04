@@ -1,0 +1,18 @@
+/* styles.css */
+
+/* Стиль для контейнера с кружком */
+.bin-wrapper {
+    position: relative;
+}
+
+/* Стиль для уменьшенного кружка с числом */
+.badge-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 6px;  /* Уменьшаем отступы */
+    font-size: 10px;    /* Уменьшаем размер шрифта */
+}

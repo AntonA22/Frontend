@@ -1,51 +1,36 @@
-import * as React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import {useParams} from "react-router-dom";
-import {useEffect} from "react";
-import {T_Ship} from "src/modules/types.ts";
-import {ShipMocks} from "src/modules/mocks.ts";
+import {useEffect, useState} from "react";
+// import {T_Ship} from "src/modules/types.ts";
+// import {ShipMocks} from "src/modules/mocks.ts";
 import mockImage from "src/assets/mock.png";
 import { dest_img } from "../../../target_config"
-import { dest_api } from "../../../target_config"
+// import { dest_api } from "../../../target_config"
+import { useAppDispatch, useAppSelector } from "src/store/store";
+import { fetchShip, removeSelectedShip } from 'src/store/slices/shipsSlice';
 
-interface ShipPageProps {
-    selectedShip: T_Ship | null;
-    setSelectedShip: (ship: T_Ship | null) => void;
-    isMock: boolean;
-    setIsMock: (mock: boolean) => void;
-}
 
-const ShipPage: React.FC<ShipPageProps> = ({ selectedShip, setSelectedShip, isMock, setIsMock }) => {
+
+const ShipPage = () => {
     const { id } = useParams<{id: string}>();
 
-    const get_data = async () => {
-        const url = dest_api !== "api" 
-            ? `${dest_api}/ships/${id}/` 
-            : `/api/ships/${id}/`;
+    const dispatch = useAppDispatch()
 
-        try {
-            const response = await fetch(url);
-            const shipData = await response.json();
-            setSelectedShip(shipData);
-        } catch {
-            get_Mock();
-        }
-    }
+    const selectedShip = useAppSelector((state) => state.ships.selectedShip)
 
-    const get_Mock = () => {
-        setIsMock(true)
-        setSelectedShip(ShipMocks.find(ship => ship?.id == parseInt(id as string)) as T_Ship)
-    }
+    const [isMock, setIsMock] = useState(false);
 
     useEffect(() => {
-        if (!isMock) {
-            get_data()
-        } else {
-            get_Mock()
+        if (id) {
+            dispatch(fetchShip(id));
+            setIsMock(false);
         }
-
-        return () => setSelectedShip(null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        return () => {
+            setIsMock(true);
+            dispatch(removeSelectedShip())
+        };
+    }, [id]); // Добавлен id в зависимости useEffect
 
     if (!selectedShip) {
         return (

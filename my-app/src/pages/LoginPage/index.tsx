@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FC, useState } from "react"
 import "./LoginPage.css"
-import { api } from "../../api"
 import { useDispatch } from 'react-redux';
-import { setCookie } from "../../store/slices/cookieSlice";
+import {handleLogin} from "src/store/slices/cookieSlice";
 import { useNavigate } from "react-router-dom";
+import { AppDispatch } from "src/store/store";
 
   
 export const LoginPage : FC = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>();
 
     const [ error, setError ] = useState(false)
     const navigate = useNavigate();
@@ -26,32 +27,26 @@ export const LoginPage : FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-
+    
+        // Данные для отправки
+        const data = {
+          username: formData.username,
+          password: formData.password,
+        };
+    
         try {
-          await api.users.usersLoginCreate(formData);
-      
-          // Проверка успешного ответа
-          const cookies = document.cookie.split(";").find((row) => row.startsWith("session_id="));
-          if (cookies != "") {
-            console.log("fine login");
-            setError(false);
-      
-            if (cookies) {
-              const sessionId = cookies.split("=")[1];
-              dispatch(setCookie(sessionId));
-            }
-            navigate("/ships");
+          const result = await dispatch(handleLogin(data));
+    
+          if (result.type === "login/fulfilled") {
+            navigate("/");
           } else {
-            console.log("bad login");
             setError(true);
           }
         } catch (err) {
-          console.log("bad login");
-          console.log(err);
           setError(true);
         }
       };
+    
 
     return (
         <>

@@ -1,0 +1,107 @@
+/* FlightsPage.module.css */
+
+/* Основной контейнер для таблицы, чтобы таблица была адаптивной */
+.table-container {
+    width: 100%; /* Таблица должна занимать 100% ширины */
+    overflow-x: auto; /* Для прокрутки по горизонтали на маленьких экранах */
+    margin-top: 20px;
+}
+
+/* Стили для самой таблицы */
+.table {
+    width: 100%;
+    border-collapse: collapse; /* Убирает лишние отступы между ячейками */
+}
+
+.flights-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid white; /* Белая обводка для всей таблицы */
+}
+
+.flights-table th, .flights-table td {
+    border: 1px solid white; /* Белая обводка для всех ячеек */
+    padding: 8px;
+    text-align: left;
+}
+
+.flights-table th {
+    background-color: #333; /* Темно-серый фон для заголовков */
+    color: white; /* Белый текст на темно-сером фоне */
+}
+
+/* Стили для заголовков таблицы */
+.table th, .table td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Стили для четных строк таблицы */
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Стили для строк при наведении */
+.table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Для маленьких экранов (мобильных) можно сделать таблицу горизонтально прокручиваемой */
+@media (max-width: 767px) {
+    .table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+/* Для больших экранов можем улучшить видимость */
+@media (min-width: 1200px) {
+    .table th, .table td {
+        font-size: 14px; /* Чуть меньше шрифт на большом экране для более удобного отображения */
+    }
+}
+
+/* Общие стили для полей ввода */
+input[type="date"] {
+    width: 100%;
+}
+
+/* Медиазапрос для экранов шириной 942px и меньше */
+@media (max-width: 942px) {
+    .table-container table {
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+    }
+
+    .form-control {
+        width: 100%;  /* Устанавливаем ширину 100% для полей ввода */
+        max-width: none;
+    }
+
+    .mb-4 {
+        margin-bottom: 1rem;
+    }
+
+    .d-flex {
+        flex-wrap: wrap;
+    }
+
+    .gap-3 {
+        gap: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+    
+    .col-md-2,
+    .col-md-3 {
+        flex: 1 1 100%;
+        max-width: 100%;
+        padding: 0.5rem;
+    }
+}

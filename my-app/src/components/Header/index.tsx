@@ -1,15 +1,31 @@
-import {Container, Navbar} from "reactstrap";
+import {Container, Navbar } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import {useState} from "react";
+import {useAppSelector, useAppDispatch} from "src/store/store.ts";
 import './header.css';
-import { useSelector } from "react-redux"
-import { RootState } from "src/store/store";
+import React from 'react';
+import {handleLogout} from "src/store/slices/cookieSlice"
+import { useNavigate } from 'react-router-dom';;
+
 
 const Header = () => {
 
+	const dispatch = useAppDispatch()
+
+	const navigate = useNavigate();
+
 	const [collapsed, setCollapsed] = useState(true);
 
-	const cookie = useSelector((state: RootState) => state.cookie.cookie);
+    const isAuthenticated = useAppSelector((state) => state.cookie.is_authenticated)
+
+	const username = useAppSelector((state) => state.cookie.username)
+	console.log(username)
+	
+	const logout = async (e:  React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault()
+        await dispatch(handleLogout())
+        navigate("/")
+    }
 
 	const hideMenu = () => setCollapsed(true);
 
@@ -40,36 +56,45 @@ const Header = () => {
 							<div className="navbar-nav ml-auto fs-5 d-flex justify-content-end align-items-center w-100">
 								{/* Элементы меню всегда справа */}
 								<div className="nav-item">
-									<NavLink to="/ships" className="nav-link" onClick={hideMenu}>
+									<NavLink to="/ships/" className="nav-link" onClick={hideMenu}>
 										Космолеты
 									</NavLink>
 								</div>
-								{cookie && (
-									<div className="nav-item">
-										<NavLink to="/flights/6" className="nav-link" onClick={hideMenu}>
-											Полет
-										</NavLink>
-									</div>
-								)}
-
 
 								{/* Показывать только если cookie существует */}
-								{cookie && (
-									<div className="nav-item">
-										<NavLink to="/ships" className="nav-link" onClick={hideMenu}>
-											Космолеты
-										</NavLink>
-									</div>
-								)}
+								{isAuthenticated ?
+                                    <>
+ 										<div className="nav-item">
+                                            <NavLink  className="nav-link" to="/flights/">
+                                                Перелеты
+                                            </NavLink>
+										</div>
+                                        <div className="nav-item">
+                                            <NavLink  className="nav-link" to="/profile/">
+                                                {username}
+                                            </NavLink>
+										</div>
+                                        <div className="nav-item">
+                                            <NavLink   className="nav-link" onClick={logout} to={""}>
+                                                Выйти
+                                            </NavLink>
+										</div>
+                                    </>
+                                    :
+                                    <>
+                                        <div className="nav-item">
+                                            <NavLink  className="nav-link" to="/login/">
+                                                Войти
+                                            </NavLink>
+										</div>
+                                        <div className="nav-item">
+                                            <NavLink  className="nav-link" to="/register/">
+                                                Зарегистрироваться
+                                            </NavLink>
+										</div>
+                                    </>
+                                }
 
-								{/* Показывать если cookie нет */}
-								{!cookie && (
-									<div className="nav-item">
-										<NavLink to="/login" className="nav-link" onClick={hideMenu}>
-											Войти
-										</NavLink>
-									</div>
-								)}
 							</div>
 						</div>
 					</div>
