@@ -19,13 +19,10 @@ const ShipPage: React.FC<ShipPageProps> = ({ selectedShip, setSelectedShip, isMo
 
     const get_data = async () => {
         const url = dest_api !== "api" 
-            ? `${dest_api}/ships/${id}` 
-            : `/${dest_api}/ships/${id}`;
-        const options = {
-            signal: AbortSignal.timeout(1000)
-        };
+            ? `${dest_api}/ships/${id}/` 
+            : `/${dest_api}/ships/${id}/`;
         try {
-            const response = await fetch(url, options);
+            const response = await fetch(url);
             const shipData = await response.json();
             setSelectedShip(shipData);
         } catch {
