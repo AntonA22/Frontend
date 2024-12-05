@@ -17,24 +17,7 @@ const initialState:T_User = {
     last_name: ""
 }
 
-export const handleCheck = createAsyncThunk<T_User, void>(
-    "check",
-    async function () {
-        const storedUser = localStorage.getItem('user');
-        console.log('user', storedUser);
 
-        if (storedUser) {
-            // Если данные есть в localStorage, возвращаем их
-            return JSON.parse(storedUser);
-        }
-
-        const response = await api.users.usersLoginCreate({
-            username: "",
-            password: ""
-        }) as unknown as AxiosResponse<T_User>;
-        return response.data;
-    }
-);
 
 export const handleLogin = createAsyncThunk<T_User, T_LoginCredentials>(
     "login",
@@ -43,7 +26,6 @@ export const handleLogin = createAsyncThunk<T_User, T_LoginCredentials>(
             username,
             password
         }) as unknown as AxiosResponse<T_User>;
-        localStorage.setItem('user', JSON.stringify(response.data.username))
         console.log(response.data.username);
 
         return response.data;
@@ -69,7 +51,6 @@ export const handleLogout = createAsyncThunk<void>(
     "logout",
     async function () {
         await api.users.usersLogoutCreate();
-        localStorage.removeItem('user');
     }
     
 );
@@ -93,6 +74,7 @@ export const handleUpdateProfile = createAsyncThunk<T_User, T_RegisterCredential
         return response.data;
     }
 );
+
 
 const cookieSlice = createSlice({
     name: "user",
@@ -132,25 +114,6 @@ const cookieSlice = createSlice({
             state.first_name = ""
             state.last_name = ""
 
-        });
-        builder.addCase(handleCheck.fulfilled, (state: T_User, action: PayloadAction<T_User>) => {
-            state.is_authenticated = true;
-            state.id = action.payload.id;
-            state.username = action.payload.username;
-            state.email = action.payload.email;
-            state.checked = true;
-            state.password = action.payload.password
-            state.first_name = action.payload.first_name
-            state.last_name = action.payload.last_name
-        });
-        builder.addCase(handleCheck.rejected, (state: T_User) => {
-            state.is_authenticated = false;
-            state.id = -1;
-            state.username = "";
-            state.email = "";
-            state.password = ""
-            state.validation_error = false;
-            state.checked = true;
         });
         builder.addCase(handleUpdateProfile.fulfilled, (state: T_User, action: PayloadAction<T_User>) => {
             state.id = action.payload.id;

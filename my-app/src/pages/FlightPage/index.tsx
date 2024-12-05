@@ -12,7 +12,7 @@ import {
     fetchFlight,
     removeFlight,
     sendDraftFlight,
-    triggerUpdateMM,
+    UpdateMM,
     updateFlight
 } from "src/store/slices/flightsSlice.ts";
 
@@ -82,7 +82,7 @@ export const FlightPage: FC = () => {
         }
 
         await dispatch(updateFlight(data))
-        await dispatch(triggerUpdateMM())
+        await dispatch(UpdateMM())
     }
 
     const deleteFlight = async () => {
@@ -121,7 +121,7 @@ export const FlightPage: FC = () => {
                 <input
                     type="text"
                     className="form-control custom-form-control"
-                    value={launch_cosmodrom}
+                    value={launch_cosmodrom || ""}
                     onChange={(e) => setLaunchCosmodrom(e.target.value)}
                     disabled={!isDraft}
                 />
@@ -131,7 +131,7 @@ export const FlightPage: FC = () => {
                 <input
                     type="text"
                     className="form-control custom-form-control"
-                    value={arrival_cosmodrom}
+                    value={arrival_cosmodrom || ""}
                     onChange={(e) => setArrivalCosmodrom(e.target.value)}
                     disabled={!isDraft}
                 />
@@ -164,7 +164,7 @@ export const FlightPage: FC = () => {
             {flight.ships.length > 0 ? (
                 <div className="cards-wrapper d-flex flex-column">
                 {flight.ships.map((ship) => (
-                     <ShipCard ship={ship} showRemoveBtn={isDraft} editMM={isDraft}/>
+                     <ShipCard key={ship.id} ship={ship} showRemoveBtn={isDraft} editMM={isDraft}/>
                 ))}
                 </div>
             ) : (

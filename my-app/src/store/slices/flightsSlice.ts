@@ -135,7 +135,7 @@ const flightsSlice = createSlice({
     removeFlight: (state) => {
       state.flight = null;
     },
-    triggerUpdateMM: (state) => {
+    UpdateMM: (state) => {
       state.save_mm = !state.save_mm;
     },
     updateFilters: (state, action: PayloadAction<T_FlightsFilters>) => {
@@ -162,5 +162,5 @@ const flightsSlice = createSlice({
 });
 
 // Экспорт действий и редьюсера
-export const { saveFlight, removeFlight, triggerUpdateMM, updateFilters } = flightsSlice.actions;
+export const { saveFlight, removeFlight, UpdateMM, updateFilters } = flightsSlice.actions;
 export default flightsSlice.reducer;

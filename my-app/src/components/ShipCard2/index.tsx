@@ -12,9 +12,7 @@ import {removeShipFromDraftFlight, updateShipValue} from "src/store/slices/fligh
 
 type ShipCardProps = {
     ship: T_Ship,
-    showAddBtn?: boolean,
     showRemoveBtn?: boolean,
-    showMM?: boolean,
     editMM?: boolean
 }
 
@@ -25,12 +23,12 @@ export const ShipCard = ({ship, showRemoveBtn = false, editMM = false}:ShipCardP
 
     const {save_mm} = useAppSelector(state => state.flights)
 
-    const [local_payload, setLocal_payload] = useState(ship.payload)
+    const [local_payload, setLocal_payload] = useState(Number(ship.payload))
 
 
     const handleRemoveFromDraftFlight = async () => {
         try {
-            console.log("Удаление корабля с ID:", ship.id); // Логирование ID
+            console.log("Удаление корабля с ID:", ship.id);
             await dispatch(removeShipFromDraftFlight(ship.id));
             console.log("Удаление прошло успешно.");
         } catch (error) {
@@ -39,10 +37,12 @@ export const ShipCard = ({ship, showRemoveBtn = false, editMM = false}:ShipCardP
     };
 
     useEffect(() => {
+        console.log("Отправляемое значение:", Number(local_payload));
         dispatch(updateShipValue({
-            ship_id: ship.id,  // Преобразуем в число
-            payload2: Number(local_payload)  // Преобразуем в число, если нужно
+            ship_id: ship.id,  
+            payload2: Number(local_payload)  
         }));
+        console.log(Number(local_payload), local_payload)
     }, [save_mm]);
 
     // const isMock = useState(false);
@@ -70,8 +70,11 @@ export const ShipCard = ({ship, showRemoveBtn = false, editMM = false}:ShipCardP
                                 type="number"
                                 className="form-control"
                                 style={{ width: "255px" }}
-                                value={local_payload}
-                                onChange={(e) => setLocal_payload(e.target.value)} 
+                                value={Number(local_payload)}
+                                onChange={(e) => {
+                                    console.log("Введённое значение:", e.target.value);
+                                    setLocal_payload(Number(e.target.value));
+                                }}
                                 disabled={!editMM}
                             />
                         </div>

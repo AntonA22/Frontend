@@ -13,18 +13,13 @@ import { RegistrationPage } from "./pages/RegistrationPage";
 import { LoginPage } from "./pages/LoginPage";
 import { FlightPage } from "./pages/FlightPage";
 import { ProfilePage } from "./pages/ProfilePage";
-import {useAppDispatch, useAppSelector} from "src/store/store.ts";
-import {handleCheck} from "src/store/slices/cookieSlice";
+// import {handleCheck} from "src/store/slices/cookieSlice";
 import { FlightsPage } from "./pages/FlightsPage";
 
 function App() {
 
-    const dispatch = useAppDispatch()
-
-    const {checked} = useAppSelector((state) => state.cookie)
 
     useEffect(() => {
-      dispatch(handleCheck())
       if (typeof window !== 'undefined' && (window as any).__TAURI__?.tauri) {
         const { invoke } = (window as any).__TAURI__.tauri;
         
@@ -39,10 +34,6 @@ function App() {
         };
       }
     }, []);
-
-    if (!checked) {
-      return <></>
-    }
 
     return (
         <div>
