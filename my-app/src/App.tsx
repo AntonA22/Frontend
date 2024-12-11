@@ -13,8 +13,12 @@ import { RegistrationPage } from "./pages/RegistrationPage";
 import { LoginPage } from "./pages/LoginPage";
 import { FlightPage } from "./pages/FlightPage";
 import { ProfilePage } from "./pages/ProfilePage";
-// import {handleCheck} from "src/store/slices/cookieSlice";
 import { FlightsPage } from "./pages/FlightsPage";
+import {ModeratorShipsListPage} from "./pages/ModeratorShipsListPage";
+import { ShipEditPage } from "./pages/EditShipPage";
+import { ShipAddPage } from "./pages/ShipAddPage";
+import { ForbiddenPage } from "./pages/ForbiddenPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 function App() {
 
@@ -52,10 +56,13 @@ function App() {
                         <Route path="/flights/:id" element={<FlightPage/>} />
                         <Route path="/profile/" element={<ProfilePage />} />
                         <Route path="/flights/" element={<FlightsPage />} />
-                        {/* <Route path="/flights/" element={<FlightsPage />} />
-                        <Route path="/profile/" element={<ProfilePage />}
-                        <Route path="/403/" element={<AccessDeniedPage />} />
-                        <Route path="/404/" element={<NotFoundPage />} /> */}
+                        <Route path="/moderator_ships/" element={<ModeratorShipsListPage />} />
+                        <Route path="/edit_ship/:id" element={<ShipEditPage />} />
+                        <Route path="/add_ship/" element={<ShipAddPage />} />
+                        <Route path="/moderator_flights/" element={<FlightsPage />} />
+                        <Route path="/403" element={<ForbiddenPage />} />
+                        <Route path="*" element={<NotFoundPage />} />
+                        {/* <Route path="/moderator_ships/:id" element={<ModeratorShipPage />} /> */}
                     </Routes>
                 </Row>
             </Container>

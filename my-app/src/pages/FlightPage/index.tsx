@@ -43,10 +43,10 @@ export const FlightPage: FC = () => {
 
     // Получение данных о полете
     useEffect(() => {
-    if (!isAuthenticated) {
-        navigate("/403/")
-    }
-    }, [isAuthenticated]);
+        if (!isAuthenticated) {
+          navigate("/403");
+        }
+      }, [isAuthenticated, navigate]);
 
     useEffect(() => {
         dispatch(fetchFlight(id || ''))
@@ -161,9 +161,9 @@ export const FlightPage: FC = () => {
 
             <h4 className="text-center">Космические корабли</h4>
 
-            {flight.ships.length > 0 ? (
+            {flight.ships?.length != undefined &&  flight.ships?.length > 0 ? (
                 <div className="cards-wrapper d-flex flex-column">
-                {flight.ships.map((ship) => (
+                {flight.ships?.map((ship) => (
                      <ShipCard key={ship.id} ship={ship} showRemoveBtn={isDraft} editMM={isDraft}/>
                 ))}
                 </div>

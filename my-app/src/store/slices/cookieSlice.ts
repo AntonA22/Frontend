@@ -10,6 +10,7 @@ const initialState:T_User = {
     email: "",
     password: "",
     is_authenticated: false,
+    is_moderator: false,
     validation_error: false,
     validation_success: false,
     checked: false,
@@ -88,6 +89,7 @@ const cookieSlice = createSlice({
         builder.addCase(handleLogin.fulfilled, (state: T_User, action: PayloadAction<T_User>) => {
             console.log(action.payload)
             state.is_authenticated = true;
+            state.is_moderator = action.payload.is_moderator;
             state.id = action.payload.id;
             state.username = action.payload.username;
             state.email = action.payload.email;
@@ -98,6 +100,7 @@ const cookieSlice = createSlice({
         builder.addCase(handleRegister.fulfilled, (state: T_User, action: PayloadAction<T_User>) => {
             state.is_authenticated = true;
             state.id = action.payload.id;
+            state.is_moderator = action.payload.is_moderator;
             state.username = action.payload.username;
             state.email = action.payload.email;
             state.password = action.payload.password
@@ -106,6 +109,7 @@ const cookieSlice = createSlice({
         });
         builder.addCase(handleLogout.fulfilled, (state: T_User) => {
             state.is_authenticated = false;
+            state.is_moderator = false;
             state.id = -1;
             state.username = "";
             state.email = "";

@@ -63,7 +63,7 @@ export interface Ship {
    */
   name: string;
   /** Статус */
-  status?: 1 | 2;
+  status?: number;
   /** Описание */
   description?: string;
   /**
@@ -102,6 +102,7 @@ export interface RegisterRequest {
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
 import axios from "axios";
+import { T_Ship } from "src/modules/types";
 
 export type QueryParamsType = Record<string | number, any>;
 
@@ -120,7 +121,9 @@ export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "pa
   body?: unknown;
 }
 
-export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">;
+export type RequestParams = Omit<FullRequestParams, "method" | "query" | "path"> & {
+  body?: FormData; // Добавляем body
+};
 
 export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
   securityWorker?: (

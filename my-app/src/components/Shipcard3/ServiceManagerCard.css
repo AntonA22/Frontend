@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.service-card-container{
+    border: 1px solid black !important;
+    border-radius: 10px !important;
+} 
+
+.black-btn{
+    background-color: black;
+    border-color: black;
+    color: white;
+}
+
+.black-btn:hover, .black-btn:active{
+    background-color: #858dc7 !important;
+    border-color: #858dc7 !important;
+    color: white;
+}
+
+.outlined-btn{
+    color: black;
+    border-color: black;
+    background-color: white;
+}
+
+.outlined-btn:hover{
+    background-color: #858dc7 !important;
+    border-color: #858dc7 !important;
+}

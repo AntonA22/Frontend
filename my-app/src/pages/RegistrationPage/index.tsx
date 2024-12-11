@@ -1,13 +1,16 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import "./RegistrationPage.css"
 import { api } from "../../api";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "src/store/store";
 
 
 export const RegistrationPage: FC = () => {
 
     const [ error, setError ] = useState(false)
     const navigate = useNavigate();
+
+    const isAuthenticated = useAppSelector((state) => state.cookie?.is_authenticated);
 
     const [formData, setFormData] = useState({
         username: '',
@@ -30,6 +33,13 @@ export const RegistrationPage: FC = () => {
             .catch (() => setError(true))
              
     };
+
+    useEffect(() => {
+        console.log(isAuthenticated)
+        if (isAuthenticated) {
+          navigate("/403");
+        }
+      }, [isAuthenticated, navigate]);
 
     return (
 

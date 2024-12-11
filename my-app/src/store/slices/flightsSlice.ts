@@ -1,8 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { T_Flight, T_Ship } from "src/modules/types.ts";
 import { AxiosResponse } from "axios";
-import { NEXT_YEAR, PREV_YEAR } from "src/utils/consts.ts";
+import { NEXT_YEAR } from "src/utils/consts.ts";
 import { api } from "src/api";
+
+const today = new Date();
+today.setMonth(today.getMonth() - 1); 
 
 // Типизация состояния слайса
 type T_FlightsState = {
@@ -18,6 +21,7 @@ export type T_FlightsFilters = {
   date_formation_start: string;
   date_formation_end: string;
   status: number;
+  user_name: string;
 };
 
 // Начальное состояние слайса
@@ -28,8 +32,9 @@ const initialState: T_FlightsState = {
   flights: [],
   filters: {
     status: 0,
-    date_formation_start: PREV_YEAR.toISOString().split("T")[0],
+    date_formation_start: today.toISOString().split("T")[0],
     date_formation_end: NEXT_YEAR.toISOString().split("T")[0],
+    user_name: ""
   },
   save_mm: false,
 };
@@ -53,7 +58,10 @@ export const fetchFlights = createAsyncThunk<T_Flight[], void, { state: { flight
         date_formation_start: filters.date_formation_start,
         date_formation_end: filters.date_formation_end,
     })) as unknown as AxiosResponse<T_Flight[]>;
-    return response.data;
+    const filteredFlights = response.data.filter(flight => 
+      filters.user_name ? flight.owner?.includes(filters.user_name) : true
+    );
+    return filteredFlights;
   }
 );
 
@@ -123,6 +131,14 @@ export const removeShipFromDraftFlight = createAsyncThunk<T_Ship[], string, { st
     }
   );
 
+  export const updateFlightStatus = createAsyncThunk<T_Flight, { flightId: string; status: number }, { state: { flights: T_FlightsState } }>(
+  "flights/updateFlightStatus",
+  async ({ flightId, status }) => {
+    const response = (await api.flights.flightsUpdateStatusAdminUpdate(flightId, { status })) as unknown as AxiosResponse<T_Flight>;
+    return response.data;
+  }
+);
+
 // Слайс
 const flightsSlice = createSlice({
   name: "flights",
@@ -157,6 +173,11 @@ const flightsSlice = createSlice({
       })
       .addCase(sendDraftFlight.fulfilled, (state) => {
         state.flight = null;
+      })
+      .addCase(updateFlightStatus.fulfilled, (state, action) => {
+        state.flights = state.flights.map(flight =>
+          flight.id === action.payload.id ? action.payload : flight
+        );
       });
   },
 });

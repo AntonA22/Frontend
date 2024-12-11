@@ -17,6 +17,7 @@ const Header = () => {
 	const [collapsed, setCollapsed] = useState(true);
 
     const isAuthenticated = useAppSelector((state) => state.cookie.is_authenticated)
+	const isModerator = useAppSelector((state) => state.cookie.is_moderator)
 
 	const username = useAppSelector((state) => state.cookie.username)
 	console.log(username)
@@ -55,45 +56,77 @@ const Header = () => {
 						>
 							<div className="navbar-nav ml-auto fs-5 d-flex justify-content-end align-items-center w-100">
 								{/* Элементы меню всегда справа */}
-								<div className="nav-item">
-									<NavLink to="/ships/" className="nav-link" onClick={hideMenu}>
-										Космолеты
-									</NavLink>
-								</div>
 
-								{/* Показывать только если cookie существует */}
-								{isAuthenticated ?
-                                    <>
- 										<div className="nav-item">
-                                            <NavLink  className="nav-link" to="/flights/">
-                                                Перелеты
-                                            </NavLink>
-										</div>
-                                        <div className="nav-item">
-                                            <NavLink  className="nav-link" to="/profile/">
-                                                {username}
-                                            </NavLink>
-										</div>
-                                        <div className="nav-item">
-                                            <NavLink   className="nav-link" onClick={logout} to={""}>
-                                                Выйти
-                                            </NavLink>
-										</div>
-                                    </>
-                                    :
-                                    <>
-                                        <div className="nav-item">
-                                            <NavLink  className="nav-link" to="/login/">
-                                                Войти
-                                            </NavLink>
-										</div>
-                                        <div className="nav-item">
-                                            <NavLink  className="nav-link" to="/register/">
-                                                Зарегистрироваться
-                                            </NavLink>
-										</div>
-                                    </>
-                                }
+								<>
+									{isAuthenticated ? (
+										isModerator ? (
+											<>
+												<div className="nav-item">
+													<NavLink className="nav-link" to="/moderator_ships/">
+														Космолеты
+													</NavLink>
+												</div>
+												<div className="nav-item">
+													<NavLink className="nav-link" to="/moderator_flights/">
+														Перелеты
+													</NavLink>
+												</div>
+												<div className="nav-item">
+													<NavLink className="nav-link" to="/profile/">
+														{username}
+													</NavLink>
+												</div>
+												<div className="nav-item">
+													<NavLink className="nav-link" onClick={logout} to="">
+														Выйти
+													</NavLink>
+												</div>
+											</>
+										) : (
+											<>
+												<div className="nav-item">
+													<NavLink to="/ships/" className="nav-link" onClick={hideMenu}>
+														Космолеты
+													</NavLink>
+												</div>
+												<div className="nav-item">
+													<NavLink className="nav-link" to="/flights/">
+														Перелеты
+													</NavLink>
+												</div>
+												<div className="nav-item">
+													<NavLink className="nav-link" to="/profile/">
+														{username}
+													</NavLink>
+												</div>
+												<div className="nav-item">
+													<NavLink className="nav-link" onClick={logout} to="">
+														Выйти
+													</NavLink>
+												</div>
+											</>
+										)
+									) : (
+										
+										<>
+											<div className="nav-item">
+												<NavLink to="/ships/" className="nav-link" onClick={hideMenu}>
+													Космолеты
+												</NavLink>
+											</div>
+											<div className="nav-item">
+												<NavLink className="nav-link" to="/login/">
+													Войти
+												</NavLink>
+											</div>
+											<div className="nav-item">
+												<NavLink className="nav-link" to="/register/">
+													Зарегистрироваться
+												</NavLink>
+											</div>
+										</>
+									)}
+								</>
 
 							</div>
 						</div>

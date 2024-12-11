@@ -2,25 +2,25 @@ export type T_Ship = {
     id: string
     name: string
     description: string
-    creation_date: number
+    creation_date: string
     image: string
     status: number
     payload: string
 }
 
 export type T_Flight = {
-    id: string | null
-    status: E_FlightStatus
-    date_complete: string
-    date_created: string
-    date_formation: string
-    owner: string
-    moderator: string
-    ships: T_Ship[]
-    launch_cosmodrom: string,
-    arrival_cosmodrom: string,
-    estimated_launch_date: string,
-    result?: boolean
+    id: string 
+    status?: number 
+    date_complete?: string 
+    date_created?: string
+    date_formation?: string 
+    owner?: string
+    moderator?: string
+    ships?: T_Ship[]
+    launch_cosmodrom?: string 
+    arrival_cosmodrom?: string 
+    estimated_launch_date?: string 
+    result?: boolean 
 }
 
 export enum E_FlightStatus {
@@ -35,8 +35,9 @@ export type T_User = {
     id: number
     username: string
     email: string
-    password: string,
+    password: string
     is_authenticated: boolean
+    is_moderator: boolean
     validation_error: boolean
     validation_success: boolean
     checked: boolean

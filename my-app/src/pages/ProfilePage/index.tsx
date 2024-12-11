@@ -2,8 +2,10 @@ import {useAppDispatch, useAppSelector} from "src/store/store.ts";
 import {Button, Form} from "reactstrap";
 import {FormEvent,  useState, useEffect} from "react";
 import {handleUpdateProfile, setValidationError} from "src/store/slices/cookieSlice";
+import { useNavigate } from "react-router-dom";
 
 export const ProfilePage = () => {
+    const navigate = useNavigate();
 
     const { username = "", email = "", first_name = "", last_name = "", validation_error } = useAppSelector((state) => state.cookie);
 
@@ -12,6 +14,8 @@ export const ProfilePage = () => {
     const [inputEmail, setInputEmail] = useState(email)
 
     const [inputPassword, setInputPassword] = useState("")
+
+    const isAuthenticated = useAppSelector((state) => state.cookie?.is_authenticated);
 
     const [input_first_name, setInput_first_name] = useState(first_name)
     const [input_last_name, setInput_last_name] = useState(last_name)
@@ -22,6 +26,12 @@ export const ProfilePage = () => {
         dispatch(setValidationError(false))
     }, [inputUsername, inputEmail, inputPassword]);
 
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+        navigate("/403");
+        }
+    }, [isAuthenticated, navigate]);
 
     const handleSaveProfile = async (e:FormEvent) => {
         dispatch(setValidationError(false)); 

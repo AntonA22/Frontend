@@ -31,6 +31,7 @@ export const ShipCard = ({ship, showRemoveBtn = false, editMM = false}:ShipCardP
             console.log("Удаление корабля с ID:", ship.id);
             await dispatch(removeShipFromDraftFlight(ship.id));
             console.log("Удаление прошло успешно.");
+
         } catch (error) {
             console.error("Ошибка при удалении корабля:", error);
         }
@@ -54,46 +55,79 @@ export const ShipCard = ({ship, showRemoveBtn = false, editMM = false}:ShipCardP
     //     : ship.image.replace("localhost", "172.20.10.11");
 
     return (
-        <div className="card w-100 mb-5 custom-card">
-            <div className="row g-0">
-                <div className="col-md-6 d-flex justify-center custom-height-img">
-                    <img src={ship.image} alt={ship.name} className="img-fluid" style={{ height: "300px" }} />
-                </div>
-                <div className="col-md-6 custom-inf-card-style">
-                    <div className="card-body d-flex flex-column justify-content-between">
-                        <h5 className="card-title">{ship.name}</h5>
-                        <p className="card-text">Дата изготовления: {ship.creation_date}</p>
-                        <div className="form-group">
-                            <label className="form-label">Полезная нагрузка (кг):</label>
-                            <input
-                                placeholder="Введите полезную нагрузку"
-                                type="number"
-                                className="form-control"
-                                style={{ width: "255px" }}
-                                value={Number(local_payload)}
-                                onChange={(e) => {
-                                    console.log("Введённое значение:", e.target.value);
-                                    setLocal_payload(Number(e.target.value));
-                                }}
-                                disabled={!editMM}
-                            />
-                        </div>
-                        <div className="d-flex justify-content-between mt-3">
-                            <Link to={`/ships/${ship.id}`}>
-                                <Button color="primary">
-                                    Открыть
-                                </Button>
-                            </Link>
-                            {showRemoveBtn && (
-                                <Button color="primary" onClick={handleRemoveFromDraftFlight}>
-                                    Удалить
-                                </Button>
-                            )}
-                        </div>
-                    </div>
-                </div>
+<div key={ship.id} className="card mb-3 service-card-container" style={{ maxWidth: '1200px' }}>
+    <div className="row g-0">
+        {/* Увеличиваем изображение */}
+        <div className="col-md-2 card-body">
+            <img
+                src={ship.image}  
+                className="img-fluid rounded-start"
+                alt={ship.name}
+                width="150px"  
+            />
+        </div>
+
+        {/* Колонка для названия и даты корабля */}
+        <div className="col-md-3 card-body">
+            <div className="card-title" style={{ fontSize: '1rem' }}>
+                <Link
+                    to={`/ships/${ship.id}`}  
+                    id={ship.name}
+                    className="text-white h3"
+                    state={{ from: ship.name }}
+                >
+                    <strong>{ship.name}</strong>  {/* Название вашего корабля */}
+                </Link>
+            </div>
+            <p className="card-text" style={{ fontSize: '1rem' }}>
+                Дата изготовления: {ship.creation_date}  {/* Дата изготовления */}
+            </p>
+        </div>
+
+        {/* Колонка для полезной нагрузки */}
+        <div className="col-md-2 card-body" style={{ fontSize: '1rem' }}>
+            <div className="form-group">
+                <label className="form-label" >Полезная нагрузка (кг):</label>
+                <input
+                    placeholder="Введите полезную нагрузку"
+                    type="number"
+                    className="form-control"
+                    style={{ width: "150px" }}  
+                    value={Number(local_payload)}
+                    onChange={(e) => {
+                        console.log("Введённое значение:", e.target.value);
+                        setLocal_payload(Number(e.target.value));
+                    }}
+                    disabled={!editMM}
+                />
             </div>
         </div>
+
+        {/* Кнопка изменить */}
+        <div className="col-md-1 card-body">
+            <Link
+                to={`/ships/${ship.id}`} 
+                className="btn btn-primary"
+                style={{ fontSize: '1rem' }}
+            >
+                Открыть
+            </Link>
+        </div>
+
+        {/* Кнопка удалить, если нужно */}
+        {showRemoveBtn &&
+        <div className="col-md-2 card-body">
+            <Button
+                color="primary"
+                onClick={handleRemoveFromDraftFlight} 
+                style={{ fontSize: '1rem' }}
+            >
+                Удалить
+            </Button>
+        </div>
+        }
+    </div>
+</div>
     );
 };
 
