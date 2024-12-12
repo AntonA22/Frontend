@@ -14,3 +14,4 @@
 - [SPA (лаб 5)](https://github.com/AntonA22/Frontend/tree/spa_guest)
 - [PWA, Tauri, Redux (лаб 6)](https://github.com/AntonA22/starship_flights_frontend/tree/pwa_and_redux)
 - [UI (лаб 7)](https://github.com/AntonA22/starship_flights_frontend/tree/user_interface)
+- [Moderator Interface (лаб 8)](https://github.com/AntonA22/starship_flights_frontend/tree/moderator_interface)
