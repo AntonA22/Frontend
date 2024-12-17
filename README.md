@@ -16,7 +16,10 @@
 - [UI (лаб 7)](https://github.com/AntonA22/starship_flights_frontend/tree/user_interface)
 - [Moderator Interface (лаб 8)](https://github.com/AntonA22/starship_flights_frontend/tree/moderator_interface)
 
-  ### [GitHub Pages] (https://antona22.github.io/starship_flights_frontend/ships)
+  ### [[GitHub Pages] ([antona22.github.io/starship_flights_frontend/ships](https://antona22.github.io/starship_flights_frontend/ships))](https://antona22.github.io/starship_flights_frontend/ships)
+
+
+### https://antona22.github.io/starship_flights_frontend/ships
 
 
   
