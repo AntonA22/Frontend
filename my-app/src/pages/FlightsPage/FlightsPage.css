@@ -1,0 +1,18 @@
+.col-fixed {
+    flex: 0 0 auto !important; /* Задаем фиксированный размер для первой колонки */
+    max-width: 12% !important;
+  }
+  
+  .flight-col {
+    flex: 1; /* Остальные колонки растягиваются */
+  }
+
+  .col-fixed2 {
+    flex: 0 0 auto !important; /* Задаем фиксированный размер для первой колонки */
+    max-width: 10% !important;
+  }
+
+  .flights-container {
+    margin-bottom: 0; /* Убирает отступы снизу */
+    padding-bottom: 0; /* Убирает внутренние отступы */
+  }

@@ -150,106 +150,118 @@ export const FlightsPage = () => {
         </Row>
       
         <div className="flights-container w-100 justify-content-start">
-          {/* Заголовки */}
-          <Card className="mb-2 w-100">
-            <Card.Body className="py-2 px-3">
-              <Row className="d-flex align-items-center">
-                <Col xs={12} sm={2} className="flight-col">
-                  <strong>ID Перелета Пользователь</strong>
+    {/* Заголовки */}
+    <Card className="mb-2 w-100">
+      <Card.Body className="py-2 px-3">
+        <Row className="d-flex align-items-center">
+          <Col xs={12} sm={2} className="flight-col col-fixed">
+            <strong>ID Перелета Пользователь</strong>
+          </Col>
+          <Col xs={12} sm={2} className="flight-col" style={{ display: 'flex', alignItems: 'center', gap: '5px', width: '201px' }}>
+            <strong>Статус</strong>
+          </Col>
+          <Col xs={12} sm={2} className="flight-col">
+            <strong>Дата формирования</strong>
+          </Col>
+          <Col xs={12} sm={2} className="flight-col">
+            <strong>Космодром отправки</strong>
+          </Col>
+          <Col xs={12} sm={2} className="flight-col">
+            <strong>Космодром прилета</strong>
+          </Col>
+          <Col xs={12} sm={2} className="flight-col col-fixed2">
+            <strong>Результат полета</strong>
+          </Col>
+          <Col xs={12} sm={2}></Col>
+        </Row>
+      </Card.Body>
+    </Card>
+
+    {/* Данные */}
+    {flights.length ? (
+      flights.map((flight) => (
+        <Card key={flight.id} className="mb-2 w-100">
+          <Card.Body className="py-2 px-3">
+            <Row className="d-flex align-items-center">
+              {!isModerator ? (
+                <div className="col-fixed">
+                  <Card.Text>
+                    <Link to={"/flights/" + flight.id} className="text-white">
+                      {flight.id}
+                    </Link>
+                    {" "}{flight.owner}
+                  </Card.Text>
+                </div>
+              ) : (
+                <Col xs={12} sm={2} className="flight-col col-fixed">
+                  {flight.id}
+                  {" "}{flight.owner}
                 </Col>
-                <Col xs={12} sm={2} className="flight-col">
-                  <strong>Статус</strong>
-                </Col>
-                <Col xs={12} sm={2} className="flight-col">
-                  <strong>Дата формирования</strong>
-                </Col>
-                <Col xs={12} sm={2} className="flight-col">
-                  <strong>Космодром отправки</strong>
-                </Col>
-                <Col xs={12} sm={2} className="flight-col">
-                  <strong>Космодром прилета</strong>
-                </Col>
-                {/* <Col xs={12} sm={2} className="flight-col">
-                  <strong>Дата запуска</strong>
-                </Col> */}
-                <Col xs={12} sm={2} className="flight-col">
-                  <strong>Результат полета</strong>
-                </Col>
-                <Col xs={12} sm={2}></Col>
-              </Row>
-            </Card.Body>
-          </Card>
-      
-          {/* Данные */}
-          {flights.length ? (
-            flights.map((flight) => (
-              <Card key={flight.id} className="mb-2 w-100">
-                <Card.Body className="py-2 px-3">
-                  <Row className="d-flex align-items-center">
-                    {!isModerator ? (
-                        <Col xs={12} sm={2} className="flight-col">
-                        <Card.Text>
-                            <Link to={"/flights/" + flight.id} className="text-white">
-                            {flight.id}
-                            </Link>
-                            {" "}{flight.owner}
-                        </Card.Text>
-                        </Col>
-                    ) : (
-                        <Col xs={12} sm={2} className="flight-col">
-                            {flight.id}
-                            {" "}{flight.owner}
-                        </Col>
-                    )}
-                    {isModerator ? (
-                        <Form.Group controlId="statusSelect" style={{ width: '180px' }}>
-                            <Form.Control
-                            as="select"
-                            value={flight.status}
-                            onChange={(e) => {
-                                const newStatus = Number(e.target.value);
-                                handleStatusChange(flight.id, newStatus); 
-                            }}
-                            >
-                            {Object.entries(statusOptions).map(([key, value]) => (
-                                <option key={key} value={key}>
-                                {value}
-                                </option>
-                            ))}
-                            </Form.Control>
-                        </Form.Group>
-                    ) : (
-                        <Col xs={12} sm={2} className="flight-col">
-                        {getStatusText(flight.status)}
-                        </Col>
-                    )}
+              )}
+              {isModerator ? (
+                    <Form.Group controlId="statusSelect" style={{ display: 'flex', alignItems: 'center', gap: '5px', width: '201px' }}>
+                        <Form.Control
+                        as="select"
+                        value={flight.status}
+                        style={{width: '101px'}}
+                        disabled
+                        >
+                        {Object.entries(statusOptions).map(([key, value]) => (
+                            <option key={key} value={key}>
+                            {value}
+                            </option>
+                        ))}
+                        </Form.Control>
+                        {flight.status !== 3 && flight.status !== 4 && (
+                            <>
+                                <button 
+                                    type="button" 
+                                    style={{ background: 'black', color: 'white', border: 'none', borderRadius: '4px', padding: '5px 10px' }}
+                                    onClick={() => handleStatusChange(flight.id, 3) } // Обработчик нажатия
+                                >
+                                    ✓
+                                </button>
+                                
+                                <button 
+                                    type="button" 
+                                    style={{ background: 'black', color: 'white', border: 'none', borderRadius: '4px', padding: '5px 10px' }}
+                                    onClick={() => handleStatusChange(flight.id, 4) } // Обработчик нажатия
+                                >
+                                    ✕
+                                </button>
+                            </>
+                        )}
+                    </Form.Group>
+                    
+                ) : (
                     <Col xs={12} sm={2} className="flight-col">
-                      {formatDate(flight.date_formation)}
+                    {getStatusText(flight.status)}
                     </Col>
-                    <Col xs={12} sm={2} className="flight-col">
-                      {flight.launch_cosmodrom}
-                    </Col>
-                    <Col xs={12} sm={2} className="flight-col">
-                      {flight.arrival_cosmodrom}
-                    </Col>
-                    {/* <Col xs={12} sm={2} className="flight-col">
-                      {formatDate(flight.estimated_launch_date)}
-                    </Col> */}
-                    <Col xs={12} sm={2} className="flight-col">
-                      {flight.result !== null
-                        ? flight.result
-                          ? "Успех"
-                          : "Неудача"
-                        : "Нет данных"}
-                    </Col>
-                  </Row>
-                </Card.Body>
-              </Card>
-            ))
-          ) : (
-            <h3 className="text-center mt-5">Перелеты не найдены</h3>
-          )}
-        </div>
+              )}
+              <Col xs={12} sm={2} className="flight-col">
+                {formatDate(flight.date_formation)}
+              </Col>
+              <Col xs={12} sm={2} className="flight-col">
+                {flight.launch_cosmodrom}
+              </Col>
+              <Col xs={12} sm={2} className="flight-col">
+                {flight.arrival_cosmodrom}
+              </Col>
+              <Col xs={12} sm={2} className="flight-col col-fixed2">
+                {flight.result !== null
+                  ? flight.result
+                    ? "Успех"
+                    : "Неудача"
+                  : "Нет данных"}
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
+      ))
+    ) : (
+      <h3 className="text-center mt-5">Перелеты не найдены</h3>
+    )}
+  </div>
       </Container>
     );
 };
